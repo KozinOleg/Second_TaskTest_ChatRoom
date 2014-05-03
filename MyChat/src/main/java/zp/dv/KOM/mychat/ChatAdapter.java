@@ -72,6 +72,7 @@ public class ChatAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.topText)).setText(msg.getName());
         ((TextView) view.findViewById(R.id.botText)).setText(msg.getText());
         ((TextView) view.findViewById(R.id.rightText)).setText(msg.getDate());
+
         return view;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

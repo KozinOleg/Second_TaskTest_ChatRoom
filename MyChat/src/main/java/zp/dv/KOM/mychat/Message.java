@@ -1,10 +1,13 @@
 package zp.dv.KOM.mychat;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message {
-    public static List<Message> ListMessage = new ArrayList<Message>();
+public class Message /*implements Parcelable*/ {
+    //public static List<Message> ListMessage = new ArrayList<Message>();
     private String name;
     private String text;
     private String date;
