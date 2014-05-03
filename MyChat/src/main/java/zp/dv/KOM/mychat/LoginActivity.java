@@ -35,19 +35,24 @@ public class LoginActivity extends Activity implements OnClickListener {
         EditText etLogin = (EditText) findViewById(R.id.etLogin);
         EditText etPass = (EditText) findViewById(R.id.etPassword);
 
-        if (!validator(EMAIL_PATTERN, etLogin.getText().toString())) {
-            Toast.makeText(LoginActivity.this,
-                    "Login bad",
-                    Toast.LENGTH_LONG).show();
-        } else if (!validator(PASSWORD_PATTERN, etPass.getText().toString())) {
-            Toast.makeText(LoginActivity.this,
-                    "Password Bad",
-                    Toast.LENGTH_LONG).show();
-        } else {
-            loginName = etLogin.getText().toString();
-            startActivity(new Intent(LoginActivity.this,
-                    ChatRoom.class));
-        }
+//        if (!validator(EMAIL_PATTERN, etLogin.getText().toString())) {
+//            Toast.makeText(LoginActivity.this,
+//                    "Login bad",
+//                    Toast.LENGTH_LONG).show();
+//        } else if (!validator(PASSWORD_PATTERN, etPass.getText().toString())) {
+//            Toast.makeText(LoginActivity.this,
+//                    "Password Bad",
+//                    Toast.LENGTH_LONG).show();
+//        } else {
+//            loginName = etLogin.getText().toString();
+//            startActivity(new Intent(LoginActivity.this,
+//                    ChatRoom.class));
+//        }
+///////////////////////////////////////////////////////////
+        loginName = etLogin.getText().toString();
+        startActivity(new Intent(LoginActivity.this,
+                ChatRoom.class));
+//////////////////////////////////////////////////////////
     }
 
     private boolean validator(String patternStr, String str) {

@@ -2,12 +2,14 @@ package zp.dv.KOM.mychat;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,21 +39,29 @@ public class ChatRoom extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("Message", messages);
+//        outState.putParcelable("Message", (Parcelable) messages);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         messages = (ArrayList<Message>) savedInstanceState.getSerializable("Message");
+//        messages = (ArrayList<Message>) savedInstanceState.getParcelable("Message");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         setMessageText((EditText) findViewById(R.id.editTextMessage));
         setButtonSend((Button) findViewById(R.id.buttonSendMessage));
         setListViewChat((ListView) findViewById(R.id.listViewChat));
@@ -65,7 +75,6 @@ public class ChatRoom extends Activity {
     /**
      * dd-MM-yy hh:mm:ss
      */
-    @SuppressWarnings("ConstantConditions")
     public void onSend(View v) {
         addMessage();
         setData();
