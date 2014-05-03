@@ -2,7 +2,6 @@ package zp.dv.KOM.mychat;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -47,14 +46,12 @@ public class ChatRoom extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("Message", messages);
-//        outState.putParcelable("Message", (Parcelable) messages);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         messages = (ArrayList<Message>) savedInstanceState.getSerializable("Message");
-//        messages = (ArrayList<Message>) savedInstanceState.getParcelable("Message");
     }
 
     @Override
@@ -72,9 +69,6 @@ public class ChatRoom extends Activity {
         setButtonState();
     }
 
-    /**
-     * dd-MM-yy hh:mm:ss
-     */
     public void onSend(View v) {
         addMessage();
         setData();
