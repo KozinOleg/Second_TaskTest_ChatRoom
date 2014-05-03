@@ -8,22 +8,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class ChatRoom extends Activity {
-    private ArrayList<Message> messages = new ArrayList<Message>();
+    private static ArrayList<Message> messages = new ArrayList<Message>();
+    private ChatAdapter chatAdapter;
+    private ListView listViewChat;
     private EditText messageText;
     private Button buttonSend;
 
-    public ArrayList<Message> getMessages() {
-        return messages;
+    public void setButtonSend(Button buttonSend) {
+        this.buttonSend = buttonSend;
+        buttonSend.setEnabled(false);
     }
 
-    public void setMessages(ArrayList<Message> messages) {
-        this.messages = messages;
+    public void setListViewChat(ListView listViewChat) {
+        this.listViewChat = listViewChat;
     }
 
     public EditText getMessageText() {
@@ -48,15 +50,45 @@ public class ChatRoom extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);    //To change body of overridden methods use File | Settings | File Templates.
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        setMessageText((EditText) findViewById(R.id.editTextMessage));
+        setButtonSend((Button) findViewById(R.id.buttonSendMessage));
+        setListViewChat((ListView) findViewById(R.id.listViewChat));
 
-        this.setMessageText((EditText) findViewById(R.id.editTextMessage));
+        chatAdapter = new ChatAdapter(this, messages);
 
-        buttonSend = (Button) findViewById(R.id.buttonSendMessage);
-        buttonSend.setEnabled(false);
-        messageText = (EditText) findViewById(R.id.editTextMessage);
+        setData();
+        setButtonState();
+    }
 
+    /**
+     * dd-MM-yy hh:mm:ss
+     */
+    @SuppressWarnings("ConstantConditions")
+    public void onSend(View v) {
+        addMessage();
+        setData();
+    }
+
+    private void setData() {
+        chatAdapter.setMessages(messages);
+        listViewChat.setAdapter(chatAdapter);
+        chatAdapter.notifyDataSetChanged();
+        messageText.setText("");
+    }
+
+    private void addMessage() {
+        messages.add(new Message(LoginActivity.loginName,
+                getMessageText().getText().toString(),
+                new SimpleDateFormat("dd.MM.yy hh:mm:ss").format(new Date())));
+        // Message Bot
+        messages.add(new Message(Bot.BotName,
+                Bot.genBotMessage().getText(),
+                new SimpleDateFormat("dd.MM.yy hh:mm:ss").format(new Date())));
+    }
+
+    private void setButtonState() {
         messageText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -73,27 +105,5 @@ public class ChatRoom extends Activity {
                 else buttonSend.setEnabled(false);
             }
         });
-    }
-
-    /**
-     * dd-MM-yy hh:mm:ss
-     */
-    @SuppressWarnings("ConstantConditions")
-    public void onSend(View v) {
-        this.setMessageText((EditText) findViewById(R.id.editTextMessage));
-        // Message User
-        messages.add(new Message(LoginActivity.loginName,
-                getMessageText().getText().toString(),
-                new SimpleDateFormat("dd.MM.yy hh:mm:ss").format(new Date())));
-        // Message Bot
-        messages.add(new Message(Bot.BotName,
-                Bot.genBotMessage().getText(),
-                new SimpleDateFormat("dd.MM.yy hh:mm:ss").format(new Date())));
-
-        ChatAdapter chatAdapter = new ChatAdapter(this, messages);
-        ListView lvChat = (ListView) findViewById(R.id.listViewChat);
-        lvChat.setAdapter(chatAdapter);
-
-        messageText.setText("");
     }
 }
