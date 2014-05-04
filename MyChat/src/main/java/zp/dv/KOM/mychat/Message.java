@@ -7,8 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message /*implements Parcelable*/ implements Serializable {
-    //public static List<Message> ListMessage = new ArrayList<Message>();
+public class Message implements Serializable {
     private String name;
     private String text;
     private String date;
