@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="zp.dv.KOM.mychat.ChatRoom"
+            android:name=".ChatActivity"
             android:label="Chat!" />
     </application>
 

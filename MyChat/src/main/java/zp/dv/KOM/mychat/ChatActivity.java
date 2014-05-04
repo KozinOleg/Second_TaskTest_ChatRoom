@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatRoom extends Activity {
+public class ChatActivity extends Activity {
     private static ArrayList<Message> messages = new ArrayList<Message>();
     private ChatAdapter chatAdapter;
     private ListView listViewChat;
