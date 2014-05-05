@@ -1,6 +1,7 @@
 package zp.dv.KOM.mychat;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,29 +15,9 @@ public class ChatAdapter extends BaseAdapter {
     private LayoutInflater linflater;
     private ArrayList<Message> messages;
 
-//    public ArrayList<Message> getMessages() {
-//        return messages;
-//    }
-
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
-
-//    public LayoutInflater getLinflater() {
-//        return linflater;
-//    }
-//
-//    public void setLinflater(LayoutInflater linflater) {
-//        this.linflater = linflater;
-//    }
-//
-//    public Context getContext() {
-//        return context;
-//    }
-//
-//    public void setContext(Context context) {
-//        this.context = context;
-//    }
 
     public ChatAdapter(Context context, ArrayList<Message> messages) {
         this.context = context;
@@ -46,38 +27,45 @@ public class ChatAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return messages.size();  //To change body of implemented methods use File | Settings | File Templates.
+        return messages.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return messages.get(position);  //To change body of implemented methods use File | Settings | File Templates.
+        return messages.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;  //To change body of implemented methods use File | Settings | File Templates.
+        return position;
     }
 
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        Message msg = getMessage(position);
+        ViewHolder holder =  new ViewHolder();
+        if (convertView == null) {
+            convertView = linflater.inflate(R.layout.activity_item, null);
+            holder.lUserName = (TextView) convertView.findViewById(R.id.topText);
+            holder.lMessage = (TextView) convertView.findViewById(R.id.botText);
+            holder.lDate = (TextView) convertView.findViewById(R.id.rightText);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
-        if (view == null) {
-            view = linflater.inflate(R.layout.activity_item, parent, false);
-        }
-        try {
-            ((TextView) view.findViewById(R.id.topText)).setText(msg.getName());
-            ((TextView) view.findViewById(R.id.botText)).setText(msg.getText());
-            ((TextView) view.findViewById(R.id.rightText)).setText(msg.getDate());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return view;  //To change body of implemented methods use File | Settings | File Templates.
+        holder.lUserName.setText(messages.get(position).getName());
+        holder.lMessage.setText(messages.get(position).getText());
+        holder.lDate.setText(String.valueOf(messages.get(position).getDate().toString()));
+
+        if (holder.lUserName.getText().toString().equals(Bot.getBotName()))
+            holder.lUserName.setTextColor(Color.BLUE);
+        else holder.lUserName.setTextColor(Color.RED);
+        convertView.setTag(holder);
+
+        return convertView;
     }
 
-    private Message getMessage(int position) {
-        return (Message) getItem(position);  //To change body of created methods use File | Settings | File Templates.
+    static class ViewHolder {
+        TextView lUserName;
+        TextView lMessage;
+        TextView lDate;
     }
 }

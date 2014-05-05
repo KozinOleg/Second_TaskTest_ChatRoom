@@ -9,7 +9,8 @@
         android:id="@+id/listViewChat"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:stackFromBottom="true" />
+        android:stackFromBottom="true"
+        android:smoothScrollbar="false" />
 
     <RelativeLayout
         android:layout_width="fill_parent"

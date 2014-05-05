@@ -16,9 +16,11 @@ public class LoginActivity extends Activity implements OnClickListener {
     private final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
     private final String PASSWORD_PATTERN = "([A-Za-z0-9-\\-\\_]{6,}$)";
-
+    private final String LOGINBAD = "Логин должен быть в формате\n"
+            + "электронного адреса !";
+    private final String PASSWORDBAD = "Пароль долен быть не короче шести символов,\n"
+            + " содержать буквы, цифры, подчеркивание и тире !";
     public static String loginName = "userDefault";
 
 
@@ -38,11 +40,11 @@ public class LoginActivity extends Activity implements OnClickListener {
         try {
             if (!validator(EMAIL_PATTERN, etLogin.getText().toString())) {
                 Toast.makeText(LoginActivity.this,
-                        "Login bad",
+                        LOGINBAD,
                         Toast.LENGTH_LONG).show();
             } else if (!validator(PASSWORD_PATTERN, etPass.getText().toString())) {
                 Toast.makeText(LoginActivity.this,
-                        "Password Bad",
+                        PASSWORDBAD,
                         Toast.LENGTH_LONG).show();
             } else {
                 loginName = etLogin.getText().toString();

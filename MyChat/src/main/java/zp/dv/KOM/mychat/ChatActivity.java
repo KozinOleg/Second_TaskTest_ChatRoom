@@ -14,11 +14,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ChatActivity extends Activity {
+    private final String MESSAGE = "Message";
     private static ArrayList<Message> messages = new ArrayList<Message>();
     private ChatAdapter chatAdapter;
     private ListView listViewChat;
     private EditText messageText;
     private Button buttonSend;
+
+    private final static String PATTERN_DATE = "dd.MM.yy hh:mm:ss";
+    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(PATTERN_DATE);
 
     public void setButtonSend(Button buttonSend) {
         this.buttonSend = buttonSend;
@@ -45,13 +49,13 @@ public class ChatActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("Message", messages);
+        outState.putSerializable(MESSAGE, messages);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        messages = (ArrayList<Message>) savedInstanceState.getSerializable("Message");
+        messages = (ArrayList<Message>) savedInstanceState.getSerializable(MESSAGE);
     }
 
     @Override
@@ -64,6 +68,7 @@ public class ChatActivity extends Activity {
         setListViewChat((ListView) findViewById(R.id.listViewChat));
 
         chatAdapter = new ChatAdapter(this, messages);
+        listViewChat.setAdapter(chatAdapter);
 
         setData();
         setButtonState();
@@ -76,19 +81,17 @@ public class ChatActivity extends Activity {
 
     private void setData() {
         chatAdapter.setMessages(messages);
-        listViewChat.setAdapter(chatAdapter);
         chatAdapter.notifyDataSetChanged();
         messageText.setText("");
     }
 
     private void addMessage() {
+        // Message User
         messages.add(new Message(LoginActivity.loginName,
                 getMessageText().getText().toString(),
-                new SimpleDateFormat("dd.MM.yy hh:mm:ss").format(new Date())));
+                simpleDateFormat.format(new Date())));
         // Message Bot
-        messages.add(new Message(Bot.BotName,
-                Bot.genBotMessage().getText(),
-                new SimpleDateFormat("dd.MM.yy hh:mm:ss").format(new Date())));
+        messages.add(Bot.genBotMessage());
     }
 
     private void setButtonState() {
