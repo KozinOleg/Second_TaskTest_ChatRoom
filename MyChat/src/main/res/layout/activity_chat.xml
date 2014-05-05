@@ -10,7 +10,8 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:stackFromBottom="true"
-        android:smoothScrollbar="false" />
+        android:smoothScrollbar="false"
+        android:transcriptMode="alwaysScroll" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
